@@ -9,15 +9,16 @@ spec:
     # run_name should be unique on a per-run basis, especially if reporting
     # to wandb or sharing PVCs between runs.
     - name: run_name
+      value: 'litv2-6b'
     - name: pvc
       value: 'finetune-data'
     # Training parameters. Model IDs are hugging face IDs to pull down, or
     # a path to your model relative to the PVC root.
     - name: model
-      value: 'EleutherAI/gpt-neo-2.7B'
+      value: 'EleutherAI/gpt-j-6B'
     # The directory to read your dataset in, and tokenize for training.
     - name: dataset
-      value: 'dataset'
+      value: 'lit-v2'
     # Whether to retokenize the data on each run. It is strongly recommended to
     # NOT enable this if you are making multiple runs on the same dataset.
     - name: retokenize
@@ -42,7 +43,7 @@ spec:
       value: '2048'
     # Model training parameters
     - name: train_ratio
-      value: '0.9'
+      value: '0.99'
     # Batch size. `-1` will let it do a reasonable and relatively conservative
     # guess.
     - name: batch_size
@@ -266,10 +267,10 @@ spec:
              "-sanitize"]
       resources:
         requests:
-          memory: 256Mi
+          memory: 16Gi
           cpu: "4"
         limits:
-          memory: 256Mi
+          memory: 16Gi
           cpu: "4"
       volumeMounts:
         - mountPath: "/{{workflow.parameters.pvc}}"
